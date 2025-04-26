@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Plus Code to 4 Words</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      padding: 2em;
+      max-width: 600px;
+      margin: auto;
+    }
+
+    input,
+    button {
+      padding: 0.5em;
+      margin-top: 1em;
+      width: 100%;
+    }
+  </style>
+</head>
+
+<body>
+  <h2>Plus Code to 4 Words</h2>
+
+  <input id="plusCode" placeholder="Enter A 12-Character Plus Code" />
+  <button onclick="MAPLE.encode()">Encode to 4 Words</button>
+  <div id="wordsOutput"></div>
+
+  <br>
+
+  <input id="wordsInput" placeholder="Enter 4 encoded words" />
+  <button onclick="MAPLE.decode()">Decode to Plus Code</button>
+  <div id="codeOutput"></div>
+  <script>
+    // Define global variables here.
+    window.wordsUrl = "../../assets/dist/"; // remove this line if you want to use the default word lists.
+  </script>
+  <script src="../MAPLE-helper.js"></script>
+  <script src="../MAPLE-tools.js"></script>
+  <script src="../MAPLE.js"></script>
+  <script>
+    // Run important services here.
+    MAPLE.loadLists().then(() => console.log("All 4 JSON word lists loaded."));
+  </script>
+</body>
+
+</html>
