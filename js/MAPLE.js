@@ -5,6 +5,11 @@
 MAPLE.encode = function encode(code) {
   if (!MAPLE.wordList1.length) return alert("Word lists not loaded yet.");
 
+  if (code.length !== 12) {
+    alert("Plus Code must be exactly 12 characters long!");
+    return;
+  } 
+
   const bigNum = MAPLE.plusCodeToBigNumber(code);
 
   const base4 = BigInt(MAPLE.wordList4.length);
@@ -27,7 +32,7 @@ MAPLE.encode = function encode(code) {
 MAPLE.decode = function decode(wordsInput) {
   if (!MAPLE.wordList1.length) return alert("Word lists not loaded yet.");
 
-  const input = wordsInput.value.trim().split(/\s*-\s*/);
+  const input = wordsInput.trim().split(/\s*-\s*/);
   if (input.length !== 4) return alert("Please enter 4 comma-separated words.");
 
   const i1 = MAPLE.wordList1.indexOf(input[0]);

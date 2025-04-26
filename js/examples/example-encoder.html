@@ -23,14 +23,14 @@
 <body>
   <h2>Plus Code to 4 Words</h2>
 
-  <input id="plusCode" placeholder="Enter A 12-Character Plus Code" />
-  <button onclick="MAPLE.encode()">Encode to 4 Words</button>
+  <input id="plusCode" placeholder="Enter A 12-Character Plus Code" minlength="12" maxlength="12" required />
+  <button onclick="encoder()">Encode to 4 Words</button>
   <div id="wordsOutput"></div>
 
   <br>
 
   <input id="wordsInput" placeholder="Enter 4 encoded words" />
-  <button onclick="MAPLE.decode()">Decode to Plus Code</button>
+  <button onclick="decoder()">Decode to Plus Code</button>
   <div id="codeOutput"></div>
   <script>
     // Define global variables here.
@@ -42,6 +42,17 @@
   <script>
     // Run important services here.
     MAPLE.loadLists().then(() => console.log("All 4 JSON word lists loaded."));
+  </script>
+  <script>
+    // Your code here
+    function encoder() {
+      const encodedText = MAPLE.encode(document.getElementById('plusCode').value)
+      document.getElementById('wordsOutput').innerText = encodedText
+    }
+    function decoder() {
+      const decodedText = MAPLE.decode(document.getElementById('wordsInput').value)
+      document.getElementById('codeOutput').innerText = decodedText
+    }
   </script>
 </body>
 
