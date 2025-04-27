@@ -26,7 +26,11 @@ jobs:
 
       - name: Read Release Description from Markdown File
         run: |
-          description=$(<"${{ github.event.inputs.description }}")
+          if [ -f "${{ github.event.inputs.description }}" ]; then
+            description=$(<"${{ github.event.inputs.description }}")
+          else
+            description="No description provided."
+          fi
           echo "DESCRIPTION<<EOF" >> $GITHUB_ENV
           echo "$description" >> $GITHUB_ENV
           echo "EOF" >> $GITHUB_ENV
@@ -51,10 +55,10 @@ jobs:
     runs-on: ubuntu-latest
     needs: create-github-release  # Ensure this runs after the release is created
     steps:
-      - name: Checkout latest branch
+      - name: Checkout main branch
         uses: actions/checkout@v3
         with:
-          ref: latest  # Checkout the 'latest' branch
+          ref: main  # Checkout the 'main' branch
 
       # Install AWS CLI
       - name: Install AWS CLI
