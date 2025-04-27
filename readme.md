@@ -19,7 +19,7 @@ For support, reports, or requests open an issue.
 ## Contributing
 Fork the ``dev`` branch.
 
-Make your changes in your fork.
+Make your changes in your fork. MAKE SURE YOU WRITE A DEVS.MD IF NEEDED. You can use serve.py if working in the web.
 
 Fill out the pull request form.
 

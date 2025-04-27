@@ -38,7 +38,18 @@ const decodedPlusCode = MAPLE.decode(maple-code) -> XXXXXXXX+XXX
 The result can be used with the MAPLE encoder or Google Maps.
 
 ### Encoding/Decoding Lat, Lon
+Encoding and decoding Plus-Codes with MAPLE is simple. MAPLE adds the ```MAPLE``` variable for you to interact with. For this you must add ```MAPLE-coords.js```.
 
 #### Encoding
+To encode a lat, lon with MAPLE you can use the following:
+```
+const encodedLatLon = MAPLE.encodeCoords(lat, lon) -> MAPLE//WORD1-WORD2-WORD3-WORD4
+```
+The result can be used with the MAPLE decoder.
 
 #### Decoding
+To encode a lat, lon with MAPLE you can use the following:
+```
+const decodedLatLon = MAPLE.decodeCoords(maple-code) -> {lat, lon}
+```
+The result can be used with the MAPLE encoder or other services (eg. Apple Maps).
