@@ -44,7 +44,7 @@ jobs:
             -H "Authorization: token $GITHUB_TOKEN" \
             -H "Content-Type: application/json" \
             -d "$(jq -n --arg tag "$tag" --arg title "$title" --arg description "$description" \
-                '{tag_name: $tag, target_commitish: "latest", name: $title, body: $description, draft: false, prerelease: false}')" \
+                '{tag_name: $tag, target_commitish: "main", name: $title, body: $description, draft: false, prerelease: false}')" \
             https://api.github.com/repos/JEMcats-Software/MAPLE/releases
 
   upload-to-s3:
