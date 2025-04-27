@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Plus Code to 4 Words</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      padding: 2em;
+      max-width: 600px;
+      margin: auto;
+    }
+
+    input,
+    button {
+      padding: 0.5em;
+      margin-top: 1em;
+      width: 100%;
+    }
+  </style>
+</head>
+
+<body>
+  <h2>Lat and Lon to MAPLE</h2>
+
+  <input id="lat" placeholder="Enter A Lat" required />
+  <input id="lon" placeholder="Enter A Long" required />
+  <button onclick="encoder()">Encode to 4 Words</button>
+  <div id="wordsOutput"></div>
+
+  <br>
+
+  <input id="wordsInput" placeholder="Enter 4 encoded words" />
+  <button onclick="decoder()">Decode to Lat and Lon</button>
+  <div id="codeOutput"></div>
+  <script>
+    // Define global variables here.
+     window.wordsUrl = "../../assets/dist/"; // remove this line if you want to use the default word lists.
+  </script>
+  <!-- <script src="https://raw.githubusercontent.com/JEMcats-Software/MAPLE/refs/heads/main/js/MAPLE-helper.js"></script>
+  <script src="https://raw.githubusercontent.com/JEMcats-Software/MAPLE/refs/heads/main/js/MAPLE-tools.js"></script>
+  <script src="https://raw.githubusercontent.com/JEMcats-Software/MAPLE/refs/heads/main/js/MAPLE.js"></script> -->
+  <script src="https://cdn.jsdelivr.net/openlocationcode/latest/openlocationcode.js" ></script>
+  <script src="../MAPLE-helper.js"></script>
+  <script src="../MAPLE-tools.js"></script>
+  <script src="../MAPLE-coords.js"></script>
+  <script src="../MAPLE.js"></script>
+  <script>
+    // Run important services here.
+    MAPLE.loadLists().then(() => console.log("All 4 JSON word lists loaded."));
+  </script>
+  <script>
+    // Your code here
+    function encoder() {
+      const encodedText = MAPLE.encodeCoords(document.getElementById('lat').value, document.getElementById('lon').value)
+      document.getElementById('wordsOutput').innerText = encodedText
+    }
+    function decoder() {
+      const decodedText = MAPLE.decodeCoords(document.getElementById('wordsInput').value)
+      document.getElementById('codeOutput').innerText = `${decodedText.lat}, ${decodedText.lon}`
+    }
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <!-- responsive on all devices -->
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Leaflet Map with Zoom-20/21 OSM Frames</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <style>
+    /* make map fill the viewport */
+    html,
+    body,
+    #map {
+      width: 100%;
+      height: 100vh;
+      margin: 0;
+      padding: 0;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="map"></div>
+
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script>
+    // Define global variables here.
+     window.wordsUrl = "../../assets/dist/"; // remove this line if you want to use the default word lists.
+  </script>
+  <!-- <script src="https://raw.githubusercontent.com/JEMcats-Software/MAPLE/refs/heads/main/js/MAPLE-helper.js"></script>
+  <script src="https://raw.githubusercontent.com/JEMcats-Software/MAPLE/refs/heads/main/js/MAPLE-tools.js"></script>
+  <script src="https://raw.githubusercontent.com/JEMcats-Software/MAPLE/refs/heads/main/js/MAPLE.js"></script> -->
+  <script src="../MAPLE-helper.js"></script>
+  <script src="../MAPLE-tools.js"></script>
+  <script src="../MAPLE.js"></script>
+  <script>
+    // Run important services here.
+    MAPLE.loadLists().then(() => console.log("All 4 JSON word lists loaded."));
+  </script>
+  <script>
+    // 1) Initialize map
+    const map = L.map('map', {
+      center: [47.5, 8.54],
+      zoom: 10,
+      minZoom: 2,
+      maxZoom: 22
+    });
+
+    // 2) OSM base layer: native tiles only go to 19, but Leaflet will auto-scale them for zoom 20–21
+    const osm = L.tileLayer(
+      'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '© OpenStreetMap contributors',
+      maxNativeZoom: 19,  // stop fetching above 19
+      maxZoom: 22         // allow the map to zoom to 21 (tiles 0–19 get upscaled)
+    }
+    ).addTo(map);
+    // 3) PlusCodes grid overlay using GeoJSON, only visible at zoom 20 and 21
+    const gridLayerGroup = L.layerGroup().addTo(map);
+    let highlightedLayer = null;
+    let highlightedKey = null;
+
+    map.on('moveend zoomend', () => {
+      // Clear previous grid
+      gridLayerGroup.clearLayers();
+
+      const zoom = map.getZoom();
+      if (zoom < 20) return; // show grid from zoom 18 and higher
+
+      const bounds = map.getBounds();
+      const tileBounds = {
+        minX: Math.floor(map.project(bounds.getNorthWest(), 22).x / 256),
+        minY: Math.floor(map.project(bounds.getNorthWest(), 22).y / 256),
+        maxX: Math.floor(map.project(bounds.getSouthEast(), 22).x / 256),
+        maxY: Math.floor(map.project(bounds.getSouthEast(), 22).y / 256)
+      };
+
+      for (let x = tileBounds.minX; x <= tileBounds.maxX; x++) {
+        for (let y = tileBounds.minY; y <= tileBounds.maxY; y++) {
+          fetch(`https://grid.plus.codes/grid/wms/22/${x}/${y}.json`, {
+            cache: 'force-cache'
+          })
+            .then(response => response.json())
+            .then(data => {
+              L.geoJSON(data, {
+                style: {
+                  color: 'black',
+                  weight: 2,
+                  fill: true,
+                  fillOpacity: 0
+                },
+                onEachFeature: function(feature, layer) {
+                  layer.on('click', function (e) {
+                    const key = feature.properties.local_code || feature.properties.global_code;
+
+                    // If clicking the same highlighted square, remove it
+                    if (highlightedLayer && highlightedKey === key) {
+                      gridLayerGroup.removeLayer(highlightedLayer);
+                      highlightedLayer = null;
+                      highlightedKey = null;
+                      return;
+                    }
+
+                    // Remove any previously highlighted square
+                    if (highlightedLayer) {
+                      gridLayerGroup.removeLayer(highlightedLayer);
+                    }
+
+                    // Create a new topmost highlight layer
+                    const newLayer = L.geoJSON(feature, {
+                      style: {
+                        color: 'red',
+                        weight: 2,
+                        fill: true,
+                        fillOpacity: 0
+                      }
+                    }).addTo(gridLayerGroup);
+
+                    // Ensure it's on top
+                    if (newLayer._path) {
+                      newLayer._path.style.zIndex = 9999;
+                    }
+
+                    // Add a popup with the local code or global code
+                    newLayer.bindPopup(`<b>Location:</b> ${MAPLE.encode(feature.properties.global_code)}`)
+                      .openPopup();
+
+                    highlightedLayer = newLayer;
+                    highlightedKey = key;
+                  });
+                }
+              }).addTo(gridLayerGroup);
+            })
+            .catch(err => console.error('Failed to fetch grid:', err));
+        }
+      }
+    });
+  </script>
+</body>
+
+</html>
