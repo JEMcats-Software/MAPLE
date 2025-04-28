@@ -1,5 +1,5 @@
 {
-  "name": "MAPLE-nodejs",
+  "name": "@jemcats/MAPLE",
   "version": "1.1.0",
   "description": "MAPLE Encoding and Decoding Library",
   "main": "index.js",
