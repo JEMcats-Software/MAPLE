@@ -5,7 +5,7 @@ const plusCodes = new PlusCodes();
 
 module.exports = function(MAPLE) {
     return {
-        encodeCoords: function(lat, lon) {
+        encode: function(lat, lon) {
             // Generate a full-length (12-character) Plus Code
             const plusCode = plusCodes.encode(lat, lon, 11);
             if (!plusCode) {
@@ -14,7 +14,7 @@ module.exports = function(MAPLE) {
             return MAPLE.encode(plusCode);
         },
 
-        decodeCoords: function(MAPLEcode) {
+        decode: function(MAPLEcode) {
             // Decode MAPLE back to a Plus Code
             const plusCode = MAPLE.decode(MAPLEcode);
             if (!plusCode) {
