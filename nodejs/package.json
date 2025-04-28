@@ -1,0 +1,19 @@
+{
+  "name": "MAPLE",
+  "version": "1.1.0",
+  "description": "MAPLE Encoding and Decoding Library",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/JEMcats-Software/MAPLE.git"
+  },
+  "author": "jemcats.software",
+  "license": "GPL-3.0",
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "node-fetch": "^2.6.9",
+    "olc-plus-codes": "^1.0.1"
+  }
+}
