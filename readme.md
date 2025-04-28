@@ -1,6 +1,6 @@
 ![Logo](./assets/icons-png/maple_512x512x32.png)
 # MAPLE
-MAPLE or **M**eaningful **A**daptations of **P**lus-code **L**ocations for **E**veryone, is an encoder for Plus Codes that takes any level 6 Plus Code or 12 character long Plus Codes and encodes them into 12 english words, similar to what3words.
+MAPLE or **M**eaningful **A**daptations of **P**lus-code **L**ocations for **E**veryone, is an encoder for Plus Codes that takes any level 6 Plus Code or 12 character long Plus Codes and encodes them into 4 english words, similar to what3words.
 
 ## Users
 The MAPLE prefix to be used in a navigation service is:
