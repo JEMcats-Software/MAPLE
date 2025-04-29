@@ -5,7 +5,12 @@
 
 version: 2
 updates:
-  - package-ecosystem: "npm" # See documentation for possible values
-    directory: "/nodejs" # Location of package manifests
+  - package-ecosystem: "npm"
+    directory: "/nodejs"
+    schedule:
+      interval: "weekly"
+
+  - package-ecosystem: "npm"
+    directory: "/docker/main_scripts"
     schedule:
       interval: "weekly"
