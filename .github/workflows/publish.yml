@@ -108,7 +108,12 @@ jobs:
           registry-url: 'https://registry.npmjs.org/'
 
       - name: Install Dependencies
-        run: npm ci
+        run: |
+          if [ -f package-lock.json ]; then
+            npm ci
+          else
+            npm install
+          fi
         working-directory: ./nodejs
 
       - name: Publish to npm
