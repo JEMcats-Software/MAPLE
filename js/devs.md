@@ -20,6 +20,15 @@ If you are use HTML for your maps, the code you need to add to your ```<body>```
 ## JavaScript
 This section will cover how to interact with MAPLE through your JavaScripts.
 
+### Varibles
+Customizing MAPLE is easy by using varibles
+
+#### Lists
+You can change the directory of the word lists by using:
+```
+window.wordsUrl = "path to your "dist" directory (eg. "../../assets/dist/")";
+```
+
 ### Encoding/Decoding Plus-Codes
 Encoding and decoding Plus-Codes with MAPLE is simple. MAPLE adds the ```MAPLE``` variable for you to interact with.
 
