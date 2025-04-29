@@ -115,6 +115,6 @@ jobs:
 
       - name: Publish to npm
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.JEMCATS_PACKAGES }}
         run: npm publish --access public
         working-directory: ./nodejs
