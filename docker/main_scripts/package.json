@@ -1,0 +1,19 @@
+{
+  "name": "maple_docker",
+  "version": "1.1.3",
+  "description": "The MAPLE docker container",
+  "main": "index.js",
+  "scripts": {
+    "test": "node ./tests.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JEMcats-Software/MAPLE.git"
+  },
+  "author": "jemcats.software",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/JEMcats-Software/MAPLE/issues"
+  },
+  "homepage": "https://github.com/JEMcats-Software/MAPLE#readme"
+}
