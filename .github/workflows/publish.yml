@@ -116,7 +116,7 @@ jobs:
       # Add GitHub Package Registry login
       - name: Login to GitHub Packages
         run: |
-          echo "//npm.pkg.github.com/:_authToken=${{ secrets.NPM_PACKAGES }}" > ~/.npmrc
+          echo "//npm.pkg.github.com/:_authToken=${{ secrets.NPM_WORKFLOW_TOKEN }}" > ~/.npmrc
 
       - name: Install Dependencies
         run: npm ci
@@ -124,6 +124,6 @@ jobs:
 
       - name: Publish to npm
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.JEMCATS_PACKAGES }}
         run: npm publish --access public
         working-directory: ./nodejs
