@@ -7,7 +7,7 @@ const { MAPLE, MAPLECoords } = require('@jemcats/maple'); // Adjust if necessary
     console.log('Word lists loaded successfully.');
 
     // Test Plus Code
-    const plusCode = '849VCWC8+R9'; // Example Plus Code
+    const plusCode = '849VCWC8+R93'; // Example Plus Code
     console.log('Original Plus Code:', plusCode);
 
     // Encode Plus Code to MAPLE code
