@@ -1,0 +1,20 @@
+{
+  "name": "MAPLE Map",
+  "short_name": "MAPLE",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#ffffff",
+  "icons": [
+    {
+      "src": "../../assets/icons-png/maple_256x256x32.png",
+      "sizes": "256x256",
+      "type": "image/png"
+    },
+    {
+      "src": "../../assets/icons-png/maple_512x512x32.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

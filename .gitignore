@@ -1,3 +1,5 @@
 .DS_STORE
 .DS_Store
 node_modules
+key.pem
+cert.pem
