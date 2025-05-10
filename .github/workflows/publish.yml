@@ -88,6 +88,8 @@ jobs:
         run: |
             aws s3 cp js/ s3://cdn.jemcats.software/MAPLE/${{ github.event.inputs.tag }}/js/ --recursive --exclude "examples/*" --exclude "devs.md"
             aws s3 cp assets/dist/ s3://cdn.jemcats.software/MAPLE/${{ github.event.inputs.tag }}/dist/ --recursive
+            aws s3 cp assets/icons-png s3://cdn.jemcats.software/MAPLE/${{ github.event.inputs.tag }}/assets/ --recursive --exclude "*" --include "*"
+            aws s3 cp webpage/ s3://jemcats.software/websites/MAPLE/ --recursive
 
       - name: Clear and Publish Latest to S3
         run: |
