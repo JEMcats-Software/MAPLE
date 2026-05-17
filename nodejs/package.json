@@ -1,6 +1,6 @@
 {
   "name": "@jemcats/maple",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "MAPLE Encoding and Decoding Library",
   "main": "index.js",
   "repository": {
