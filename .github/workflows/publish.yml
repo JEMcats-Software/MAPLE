@@ -53,29 +53,25 @@ jobs:
 
   upload-to-s3:
     runs-on: ubuntu-latest
-    needs: create-github-release  # Ensure this runs after the release is created
+    needs: create-github-release
+
+    # Required for OIDC token exchange with AWS
+    permissions:
+      id-token: write
+      contents: read
+
     steps:
       - name: Checkout main branch
         uses: actions/checkout@v3
         with:
-          ref: main  # Checkout the 'main' branch
+          ref: main
 
-      # Install AWS CLI
-      - name: Install AWS CLI
-        run: |
-          curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-          unzip awscliv2.zip
-          sudo ./aws/install --update
-          aws --version  # Verify installation
-
-      # Configure AWS credentials
+      # Configure AWS credentials via IAM Role (OIDC - no static keys needed)
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v2
         with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          role-to-assume: ${{ vars.MAPLEgithubaction }}
           aws-region: ${{ secrets.AWS_REGION }}
-        
 
       # Minify JavaScript
       - name: Minify JavaScript
@@ -86,15 +82,19 @@ jobs:
       # Sync contents to S3 bucket while excluding .github folder
       - name: Sync to S3
         run: |
-            aws s3 cp js/ s3://cdn.jemcats.software/MAPLE/${{ github.event.inputs.tag }}/js/ --recursive --exclude "examples/*" --exclude "devs.md"
-            aws s3 cp assets/dist/ s3://cdn.jemcats.software/MAPLE/${{ github.event.inputs.tag }}/dist/ --recursive
-            aws s3 cp assets/icons-png s3://cdn.jemcats.software/MAPLE/${{ github.event.inputs.tag }}/assets/ --recursive --exclude "*" --include "*"
-            aws s3 cp webpage/ s3://jemcats.software/websites/MAPLE/ --recursive
+          aws s3 cp js/ s3://cdn.jemcats.software/MAPLE/${{ github.event.inputs.tag }}/js/ --recursive --exclude "examples/*" --exclude "devs.md"
+          aws s3 cp assets/dist/ s3://cdn.jemcats.software/MAPLE/${{ github.event.inputs.tag }}/dist/ --recursive
+          aws s3 cp assets/icons-png s3://cdn.jemcats.software/MAPLE/${{ github.event.inputs.tag }}/assets/ --recursive --exclude "*" --include "*"
+          aws s3 cp webpage/ s3://jemcats.software/websites/MAPLE/ --recursive
 
       - name: Clear and Publish Latest to S3
         run: |
           aws s3 rm s3://cdn.jemcats.software/MAPLE/latest/ --recursive
           aws s3 cp s3://cdn.jemcats.software/MAPLE/${{ github.event.inputs.tag }}/ s3://cdn.jemcats.software/MAPLE/latest/ --recursive
+
+      - name: Invalidate Latest CDN Tag
+        run: |
+          aws cloudfront create-invalidation --distribution-id ${{ vars.cdnjemcatssoftwaredistributionid }} --paths "/MAPLE/latest/*"
 
   publish_npm_package:
     runs-on: ubuntu-latest

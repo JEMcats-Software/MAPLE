@@ -1,6 +1,7 @@
 // Please add MAPLE-tools.js and MAPLE-helper.js to your HTML file.
 // MAPLE.js
 // The encoder and decoder for MAPLE
+// v2.0.2
 
 MAPLE.encode = function encode(code) {
   if (!MAPLE.wordList1.length) return alert("Word lists not loaded yet.");
