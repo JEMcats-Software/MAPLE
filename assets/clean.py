@@ -3,9 +3,9 @@ import re
 from collections import Counter
 
 # List of swear words (you can extend or modify this list)
-swear_words = {
+swear_words = [
     # get from: https://gist.github.com/takatama/b4587f6509489a529bbcd87e1a96a3f2
-}
+]
 
 def clean_words(words_file):
     with open(words_file, 'r') as file:
@@ -19,20 +19,13 @@ def clean_words(words_file):
     def contains_swear(word):
         return any(swear in word.lower() for swear in swear_words)
 
-    # Check for any repeated letters
-
-    def has_three_or_more_repeated_letters(word):
-        counts = Counter(word.lower())
-        return any(count >= 3 for count in counts.values())
-
     # Clean words
     cleaned_words = [
         word.lower() for word in words
         if word.isalpha()
-        and 3 <= len(word) <= 6
+        and 4 <= len(word) <= 9
         and not contains_numbers(word)
         and not contains_swear(word)
-        and not has_three_or_more_repeated_letters(word)
     ]
 
     # Save cleaned words
@@ -42,4 +35,4 @@ def clean_words(words_file):
     print(f"Cleaned words saved to {words_file}")
 
 # Replace 'words.json' with your actual file path
-clean_words("words.json")
+clean_words("rawwords.json")

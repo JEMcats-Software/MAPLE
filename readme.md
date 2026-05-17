@@ -8,6 +8,8 @@ The MAPLE prefix to be used in a navigation service is:
 MAPLE//WORD1-WORD2-WORD3-WORD4
 ```
 
+WARNING: NEW MAJOR VERSIONS OF MAPLE ARE INCOMPATIBLE WITH OLD MAJOR VERSIONS OF MAPLE! eg. v1.x.x is not compatible with v2.x.x!
+
 ## Devs
 For each language, there is a corrasponding directory. Each directory has a ```devs.md```, those files will give you details on how to properly integrate MAPLE into your code.
 

@@ -2,7 +2,7 @@ import json
 import random
 
 # Load list from input JSON file
-with open("words.json", "r") as f:
+with open("rawwords.json", "r") as f:
     words = json.load(f)
 
 # Shuffle randomly
